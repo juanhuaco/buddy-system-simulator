@@ -21,18 +21,25 @@
         <div class="row">
             <div class="col-12">
                 <form class="d-inline-block row">
-                    <input class="col-5" type="number" placeholder="Size"/>
+                    <input id="value" class="col-5" type="number" placeholder="Size"/>
                     <label class="col-3">GB</label>
-                    <button class="col-3 btn btn-dark" type="submit">Add</button>
+                    <button id="add" class="col-3 btn btn-dark" type="button">Add</button>
                 </form>
             </div>
         </div>
     </main>
-    <main style="height: 400px" class="d-flex container-fluid mw-100 p-4 bg-white">
-        <div class="justify-content-center d-inline w-100 row border border-4 border-dark rounded">
-            <div class="col-12 h-100 text-center">1024 GB</div>
+    
+    <div style="height: 400px" class="d-flex container-fluid justify-content-center d-inline w-100 row border border-4 border-dark rounded">
+        <div class="col-12 h-100 w-100 row border text-center m-0 p-0">
+            <div class="col-6 h-100 w-50 border border-2 text-center m-0 p-0">
+                1024GB
+            </div>
+            <div class="row col-6 h-100 w-50 border border-2 text-center m-0 p-0">
+                1024
+            </div>
         </div>
-    </main>
+    </div>
+  
 
 
     <footer class="bg-dark text-light p-4 fixed-bottom">
