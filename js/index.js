@@ -5,7 +5,7 @@ import Model from './model.js';
 //cada slot representara un div con col-6 y cada slot ser[a un nuevo sistema de columnas]
 
 document.addEventListener('DOMContentLoaded', ()=>{
-    localStorage.clear();
+    //localStorage.clear();
     const view = new View();
     const model = new Model();
     model.setView(view);
