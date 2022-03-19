@@ -10,7 +10,7 @@ export default class View {
         this.removeMemory = new RemMem();
         
         this.addMemory.onClick((value) => {this.allocMemory(value)});
-        this.removeMemory.onClick(()=>{console.log('removing')});
+        this.removeMemory.onClick((id)=> {this.deallocMemory(id)});
     }
 
     setModel(model){
@@ -19,12 +19,23 @@ export default class View {
 
     allocMemory(value){
         const allocated = this.model.allocMemory(value, 1, this.slots);
-        console.log(`AllocatedFinal: ${allocated}`);
+        //console.log(`AllocatedFinal: ${allocated}`);
         if(!allocated){
             console.error('No se aloja');
         }
         this.model.save();
         //console.log(this.model.slots);
+    }
+
+    deallocMemory(id){
+        const deallocated = this.model.deallocMemory(id, 1, this.slots);
+        //console.log(`DeallocatedFinal: ${deallocated}`);
+        if(!deallocated){
+            console.error('No se desaloja');
+        }
+
+        //console.log(this.model.slots);
+        this.model.save();
     }
 
     splitSlot(slot, leftValue, rightValue){
@@ -37,4 +48,7 @@ export default class View {
         </div>`;
     }
 
+    joinSlot(slot, value){
+        slot.innerHTML = `${value}GB`;
+    }
 }

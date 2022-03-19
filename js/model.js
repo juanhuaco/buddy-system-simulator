@@ -85,6 +85,48 @@ export default class Model {
         }
     }
 
+    deallocMemory(id, node, slot){
+        const tree = this.slots;
+        const leftNode = node*2;
+        const rightNode = node*2 + 1;
+
+        let deallocated;
+        //has children
+        if(tree[node].id == 0){
+
+            //console.log('has children');
+
+            deallocated = this.deallocMemory(id, leftNode,slot.children[0]);
+
+            if(!deallocated){
+                deallocated = this.deallocMemory(id, rightNode, slot.children[1]);
+            }
+
+            if(tree[leftNode].id == -1 && tree[rightNode].id == -1){
+                tree[node].id = -1;
+                this.view.joinSlot(slot, tree[node].size);
+            }
+            
+            return deallocated;
+        }
+
+        //its been allocated
+        if(tree[node].id < 0){
+            //console.log('its been allocated');
+            slot.innerHTML = `${tree[node].size}GB`
+            return false;
+        }
+
+        //its the lastttttttt
+        if(id == tree[node].id){
+            tree[node].id = -1;
+            tree[node].value = null;
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     save(){
         localStorage.setItem('slots', JSON.stringify(this.slots));
     }
