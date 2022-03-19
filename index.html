@@ -17,26 +17,33 @@
         </div>
     </nav>
 
-    <main class="d-flex container-fluid mw-100 p-4 bg-light justify-content-center vh-50">
+    <main class="d-flex container-fluid mw-100 p-2 bg-light justify-content-center vh-50">
         <div class="row">
             <div class="col-12">
                 <form class="d-inline-block row">
-                    <input id="value" class="col-5" type="number" placeholder="Size"/>
+                    <input id="addValue" class="col-5" type="number" placeholder="Size"/>
                     <label class="col-3">GB</label>
                     <button id="add" class="col-3 btn btn-dark" type="button">Add</button>
                 </form>
             </div>
         </div>
     </main>
+
+    <main class="d-flex container-fluid mw-100 p-2 bg-light justify-content-center vh-50">
+        <div class="row">
+            <div class="col-12">
+                <form class="d-inline-block row">
+                    <input id="removeValue" class="col-5" type="number" placeholder="MID"/>
+                    <label class="col-3">MID</label>
+                    <button id="remove" class="col-3 btn btn-dark" type="button">Remove</button>
+                </form>
+            </div>
+        </div>
+    </main>
     
     <div style="height: 400px" class="d-flex container-fluid justify-content-center d-inline w-100 row border border-4 border-dark rounded">
-        <div class="col-12 h-100 w-100 row border text-center m-0 p-0">
-            <div class="col-6 h-100 w-50 border border-2 text-center m-0 p-0">
-                1024GB
-            </div>
-            <div class="row col-6 h-100 w-50 border border-2 text-center m-0 p-0">
-                1024
-            </div>
+        <div id="container" class="col-12 h-100 w-100 row border text-center m-0 p-0">
+            1024GB
         </div>
     </div>
   

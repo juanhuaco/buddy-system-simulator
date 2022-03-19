@@ -7,14 +7,19 @@ export default class Model {
         this.idCounter = 1;
 
         if(!this.slots){
-            
-            let s = 1024;
-            for(let i = 0; i < 2048; i++){
-                this.slots[i] = {id:-1, size: s, value:null,};
+            this.slots=[];
+            const cantNodes = 2048;
+            this.slots[1] = {id:-1, size: 1024, value: null,};
+            for(let i = 2; i < cantNodes; i++){
+                let fatherNode;
+                if(i%2 == 0){ //even
+                    fatherNode = i/2;
+                }else{ //odd
+                    fatherNode = (i-1)/2;
+                }
+                this.slots[i] = {id:-1, size: (this.slots[fatherNode].size/2), value:null,};  
             }
         }
-
-        console.log(this.slots);
     }
 
     setView(view){
@@ -22,17 +27,24 @@ export default class Model {
     }
 
 
-    allocMemory(value, node){
+    allocMemory(value, node, slot){
         const tree = this.slots;
         const leftNode = node*2;
         const rightNode = node*2 + 1;
+
+       // console.log(`Node: ${node} -- Valor: ${value}`);
+        //console.log(`ActualNodeSize: ${tree[node].size} -- NodeID: ${tree[node].id}`);
+
         let allocated;
         //has children
         if(tree[node].id == 0){
-            allocated = allocMemory(value, leftNode);
+
+            //console.log('has children');
+
+            allocated = this.allocMemory(value, leftNode,slot.children[0]);
 
             if(!allocated){
-                allocated = allocMemory(value, rightNode);
+                allocated = this.allocMemory(value, rightNode, slot.children[1]);
             }
             
             return allocated;
@@ -40,30 +52,37 @@ export default class Model {
 
         //its been allocated
         if(tree[node].id > 0){
+            //console.log('its been allocated');
             return false;
         }
 
         //its the lastttttttt
-        if(tree[node].size <= value/2){
-            allocated = allocMemory(value, leftNode);
+        if(value <= (tree[node].size/2)){
+            //console.log('lets go to the next step');
+            this.view.splitSlot(slot, tree[node].size/2, tree[node].size/2);
+            allocated = this.allocMemory(value, leftNode, slot.children[0]);
             if(!allocated){
-                allocated = allocMemory(value, rightNode);
+                allocated = this.allocMemory(value, rightNode, slot.children[1]);
             }
-            if(!allocated){
+            if(allocated){
                 tree[node].id=0;
             }
-            return false;
+            return allocated;
         }
-        if(tree[node].size <= value){
+        if(value <= tree[node].size){
+            //console.log('lets alloc');
             tree[node].id = this.idCounter;
             this.idCounter++;
 
             tree[node].value = value;
 
+            slot.innerHTML = `
+            MID: ${tree[node].id}
+            Size: ${tree[node].value}
+            Empty: ${tree[node].size - tree[node].value}`;
+            slot.classList.add('bg-success');
             return true;
         }
-
-        return false;
     }
 
     save(){

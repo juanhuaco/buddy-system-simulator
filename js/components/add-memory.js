@@ -1,7 +1,7 @@
 export default class AddMemory{
     constructor(){
         this.btn = document.getElementById('add');
-        this.input = document.getElementById('value');
+        this.input = document.getElementById('addValue');
     }
 
     onClick(callback){
